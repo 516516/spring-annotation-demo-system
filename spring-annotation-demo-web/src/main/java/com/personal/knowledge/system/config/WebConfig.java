@@ -14,6 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan("com.personal.knowledge.system") // 扫描路径  @Controller @Service
 @EnableWebMvc  // 开启注解驱动  <mvc:annotation-driven/>
+//  原始的DispatcherServlet:  org.springframework.web.servlet.DispatcherServlet
 public class WebConfig implements WebMvcConfigurer {
-
 }
