@@ -1,6 +1,5 @@
 package com.personal.knowledge.system.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.personal.knowledge.system.mapper.ModelMapper;
 import com.personal.knowledge.system.model.Model;
 import com.personal.knowledge.system.service.ModelService;
