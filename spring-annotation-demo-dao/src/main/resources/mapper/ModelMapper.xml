@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 ，为了使用接口动态代理，这里必须是接口的全路径名-->
+<mapper namespace="com.personal.knowledge.system.mapper.ModelMapper">
+    <!--
+        1.解决属性名和表结构字段名不一致问题
+        2.完成高级查询，一对一、一对多、多对多
+    -->
+    <resultMap id="BaseResultMap" type="com.personal.knowledge.system.model.Model">
+        <!--
+            1.id：指定主键
+            2.column：数据库列
+            3.property：实体字段
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="model_name" property="modelName" jdbcType="VARCHAR"/>
+        <result column="model_code" property="modelCode" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="yn" property="yn" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <resultMap id="ResultMapModelObjVo" extends="BaseResultMap" type="com.personal.knowledge.system.model.ModelObjVo">
+        <!--
+            1.association:定义子对象映射
+            2.property:子对象在父对象中的属性名
+            3.javaType:集合类型
+            5.autoMapping:开启自动映射
+            内容:子对象的属性映射，参考resultMap
+        -->
+        <association property="modelDes" javaType="com.personal.knowledge.system.model.ModelDes" autoMapping="true">
+            <id column="mdes_id" property="id" jdbcType="BIGINT"/>
+            <result column="mdes_model_id" property="modelId" jdbcType="BIGINT"/>
+            <result column="mdes_description" property="description" jdbcType="VARCHAR"/>
+            <result column="mdes_update_user" property="updateUser" jdbcType="TIMESTAMP"/>
+            <result column="mdes_create_user" property="createUser" jdbcType="VARCHAR"/>
+            <result column="mdes_yn" property="yn" jdbcType="TINYINT"/>
+        </association>
+    </resultMap>
+
+    <!--resultMap的继承使用-->
+    <resultMap id="BaseResultMapVo" extends="BaseResultMap" type="com.personal.knowledge.system.model.ModelVo">
+        <!--
+            1.collection:定义子对象集合映射
+            2.property:子对象在父对象中的属性名
+            3.javaType:集合类型
+            4.ofType:子对象的java数据类型
+            5.autoMapping:开启自动映射
+            内容:子对象的属性映射，参考resultMap
+        -->
+        <collection property="factorList" javaType="List" ofType="com.personal.knowledge.system.model.Factor" autoMapping="true">
+            <id column="f_id" property="id" jdbcType="BIGINT"/>
+            <result column="f_model_id" property="modelId" jdbcType="BIGINT"/>
+            <result column="f_factor_name" property="factorName" jdbcType="VARCHAR"/>
+            <result column="f_factor_code" property="factorCode" jdbcType="VARCHAR"/>
+            <result column="f_create_user" property="createUser" jdbcType="VARCHAR"/>
+            <result column="f_create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="f_update_user" property="updateUser" jdbcType="VARCHAR"/>
+            <result column="f_update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+            <result column="f_yn" property="yn" jdbcType="TINYINT"/>
+        </collection>
+    </resultMap>
+
+    <!--多对多查询  最牛逼多对多的查询 开始-->
+    <resultMap id="ModelListVoMap" extends="BaseResultMap" type="com.personal.knowledge.system.model.ModelListVo">
+        <collection property="factorVoList" javaType="List" ofType="com.personal.knowledge.system.model.FactorVo"
+                    resultMap="FactorVoMap" columnPrefix="f_" autoMapping="true">
+        </collection>
+    </resultMap>
+    <resultMap id="FactorVoMap" type="com.personal.knowledge.system.model.FactorVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="model_id" property="modelId" jdbcType="BIGINT"/>
+        <result column="factor_name" property="factorName" jdbcType="VARCHAR"/>
+        <result column="factor_code" property="factorCode" jdbcType="VARCHAR"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="yn" property="yn" jdbcType="TINYINT"/>
+        <collection property="mathList" javaType="List" ofType="com.personal.knowledge.system.model.Math"
+                    resultMap="MathMap" columnPrefix="ma_" autoMapping="true">
+        </collection>
+    </resultMap>
+    <resultMap id="MathMap" type="com.personal.knowledge.system.model.Math">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="factor_id" property="factorId" jdbcType="BIGINT"/>
+        <result column="column_1" property="column1" jdbcType="DECIMAL"/>
+        <result column="column_2" property="column2" jdbcType="DECIMAL"/>
+        <result column="column_3" property="column3" jdbcType="DECIMAL"/>
+        <result column="math_code" property="mathCode" jdbcType="VARCHAR"/>
+        <result column="math_name" property="mathName" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--多对多查询  最牛逼多对多的查询 开始-->
+
+    <resultMap id="ResultMapModelExpandVo" extends="BaseResultMap" type="com.personal.knowledge.system.model.ModelExpandVo">
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--
+        1.定义sql片段：<sql id="Base_Column_List"></>
+        2.使用sql片段：<include refid="Base_Column_List"/>
+    -->
+    <sql id="Base_Column_List">
+        id, model_name, model_code, create_time, create_user, update_time, update_user, yn
+    </sql>
+    <sql id="ModelExDes_Column_List">
+        m.id, m.model_name, m.model_code, m.create_time, m.create_user, m.update_time, m.update_user,mdes.description, m.yn
+    </sql>
+
+    <!--平时使用#{}就行-->
+    <!--查询statement，内容：sql语句。
+       id：唯一标识，随便写，在同一个命名空间下保持唯一，使用动态代理之后要求和方法名保持一致
+       resultType：sql语句查询结果集的封装类型，使用动态代理之后和方法的返回类型一致；resultMap：二选一
+       parameterType：参数的类型，使用动态代理之后和方法的参数类型一致
+     -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!--
+        删除的statement
+        id：唯一标识，随便写，在同一个命名空间下保持唯一，使用动态代理之后要求和方法名保持一致
+        parameterType：参数的类型，使用动态代理之后和方法的参数类型一致
+    -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from model
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <!-- 新增的Statement
+         id：唯一标识，随便写，在同一个命名空间下保持唯一，使用动态代理之后要求和方法名保持一致
+         parameterType：参数的类型，使用动态代理之后和方法的参数类型一致
+         useGeneratedKeys:开启主键回写
+         keyColumn：指定数据库的主键
+         keyProperty：主键对应的pojo属性名
+    -->
+    <!--已经成功的验证了-主键回写实际业务开发中多用于解决外键问题-->
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.personal.knowledge.system.model.Model">
+        insert into model (model_name, model_code, create_user)
+        values (#{modelName,jdbcType=VARCHAR}, #{modelCode,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.personal.knowledge.system.model.Model">
+        insert into model
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="modelName != null">
+                model_name,
+            </if>
+            <if test="modelCode != null">
+                model_code,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="yn != null">
+                yn,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="modelName != null">
+                #{modelName,jdbcType=VARCHAR},
+            </if>
+            <if test="modelCode != null">
+                #{modelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="yn != null">
+                #{yn,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <!--
+        更新的statement
+        id：唯一标识，随便写，在同一个命名空间下保持唯一，使用动态代理之后要求和方法名保持一致
+        parameterType：参数的类型，使用动态代理之后和方法的参数类型一致
+      -->
+    <!--set  有纠错功能，多‘，’可以自动去掉-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.personal.knowledge.system.model.Model">
+        update model
+        <set>
+            <if test="modelName != null">
+                model_name = #{modelName,jdbcType=VARCHAR},
+            </if>
+            <if test="modelCode != null">
+                model_code = #{modelCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="yn != null">
+                yn = #{yn,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.personal.knowledge.system.model.Model">
+    update model
+    set model_name = #{modelName,jdbcType=VARCHAR},
+      model_code = #{modelCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      yn = #{yn,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--hubo-->
+    <!--vo类型的语句-->
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="com.personal.knowledge.system.model.Model">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where model_name = #{modelName,jdbcType=VARCHAR}
+    </select>
+
+    <!--批量新增语句-->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into model (model_name, model_code,create_user,yn)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.modelName,jdbcType=VARCHAR},#{item.modelCode,jdbcType=VARCHAR},#{item.createUser,jdbcType=VARCHAR},#{item.yn,jdbcType=TINYINT})
+        </foreach>
+    </insert>
+
+    <!--批量更新语句-->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update model
+            <set>
+                model_name=#{item.modelName,jdbcType=VARCHAR},model_code=#{item.modelCode,jdbcType=VARCHAR},update_user=#{item.updateUser,jdbcType=VARCHAR},yn=#{item.yn,jdbcType=TINYINT}
+            </set>
+            where id = #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+    <!--批量查询语句-->
+    <select id="batchSelect" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" index="index" item="item">
+            #{item}
+        </foreach>
+    </select>
+    <!--批量查询语句-->
+    <select id="batchArraySelect" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where id in
+        <foreach collection="array" open="(" separator="," close=")" index="index" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--批量删除语句-->
+    <delete id="batchDelete" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            delete from model
+            where id=#{item.id,jdbcType=BIGINT}
+        </foreach>
+    </delete>
+
+    <!--
+        1.#{},预编译的方式preparedstatement，使用占位符替换，防止sql注入，一个参数的时候，任意参数名可以接收，用于参数占位
+        2.${},普通的Statement，字符串直接拼接，不可以防止sql注入，一个参数的时候，必须使用${value}接收参数，用于sql语句的拼接
+    -->
+    <select id="selectByTableName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ${tableName}
+        where id = #{model.id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOneParam" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where update_user =#{id}
+    </select>
+
+    <select id="selectByMultiParam" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where update_user =#{updateUser} and id=#{id}
+    </select>
+
+    <!--动态sql  OGNL表达式动态生成sql功能：
+        1.if
+        2.choose,when,otherwise
+        3.where,set
+        4.foreach
+    -->
+    <!--if-->
+    <select id="testIfExpression" resultMap="BaseResultMap" parameterType="com.personal.knowledge.system.model.Model">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where 1=1
+        <if test="updateUser!=null and updateUser.trim()!=''">
+            and update_user like '%${updateUser}%'
+        </if>
+    </select>
+
+    <!--choose when otherwise-->
+    <select id="testCWOEspression" resultMap="BaseResultMap" parameterType="com.personal.knowledge.system.model.Model">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where 1=1
+        <choose>
+            <when test="updateUser!=null and updateUser.trim()!=''">
+                and update_user like '%${updateUser}%'
+            </when>
+            <when test="id!=null">
+                and id = #{id}
+            </when>
+            <otherwise>
+                and update_user = 'hubo_udpate'
+            </otherwise>
+        </choose>
+    </select>
+
+    <!--where-->
+    <select id="testWhereExpression" resultMap="BaseResultMap" parameterType="com.personal.knowledge.system.model.Model">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        <where>
+            1=1
+            <if test="updateUser !=null and updateUser.trim()!=''">
+                and update_user like '%${updateUser}%'
+            </if>
+            <if test="id !=null">
+                and id=#{id}
+            </if>
+        </where>
+    </select>
+
+    <!--one to one  继承实现  一对一  -->
+    <select id="testOneToOneQueryF1" resultMap="ResultMapModelExpandVo" parameterType="com.personal.knowledge.system.model.ModelExpandVo">
+        select
+        <include refid="ModelExDes_Column_List"/>
+        from model m left join model_des mdes on m.id=mdes.model_id
+        where m.id=#{id}
+    </select>
+
+    <!--one to one  直接添加属性实现  一对一 -->
+    <select id="testOneToOneQueryF2" resultMap="ResultMapModelObjVo" parameterType="com.personal.knowledge.system.model.ModelObjVo">
+        select
+        m.*,mdes.id mdes_id,mdes.model_id mdes_model_id,
+        mdes.description mdes_description,mdes.update_user mdes_update_user,
+        mdes.create_user mdes_create_user,mdes.yn mdes_yn
+        from model m left join model_des mdes on m.id=mdes.model_id
+        where m.id=#{id}
+    </select>
+
+    <!--one to More  直接添加属性实现  一对多 -->
+    <select id="testOneToMore" resultMap="BaseResultMapVo" parameterType="com.personal.knowledge.system.model.Model">
+        select
+        m.*,
+        f.id f_id,
+        f.model_id f_model_id,
+        f.factor_name f_factor_name,
+        f.factor_code f_factor_code,
+        f.create_user f_create_user,
+        f.create_time f_create_time,
+        f.update_user f_update_user,
+        f.update_time f_update_time,
+        f.yn f_yn,
+        from model m left join factor f on m.id=f.model_id
+        where m.id=#{id}
+    </select>
+
+    <!--one to More  直接添加属性实现  一对多 -->
+    <select id="testMoreToMore" resultMap="ModelListVoMap" parameterType="com.personal.knowledge.system.model.Model">
+        select
+        m.*,
+        f.id f_id,
+        f.model_id f_model_id,
+        f.factor_name f_factor_name,
+        f.factor_code f_factor_code,
+        f.create_user f_create_user,
+        f.create_time f_create_time,
+        f.update_user f_update_user,
+        f.update_time f_update_time,
+        f.yn f_yn,
+        ma.id f_ma_id,
+        ma.factor_id  f_ma_factor_id,
+        ma.column_1  f_ma_column_1,
+        ma.column_2  f_ma_column_2,
+        ma.column_3  f_ma_column_3,
+        ma.math_code  f_ma_math_code,
+        ma.math_name  f_ma_math_name,
+        ma.update_time  f_ma_update_time,
+        ma.update_user  f_ma_update_user,
+        ma.create_time  f_ma_create_time,
+        ma.create_user  f_ma_create_user
+        from model m
+        left join factor f on m.id=f.model_id
+        left join math ma on ma.factor_id = f.id
+        where m.id=#{id}
+    </select>
+
+    <!--sql中特殊符号处理-->
+    <!--解决方案1.使用xml中的符号替换 <:&lt;  >:&gt;  &:&amp;  .:&apos   ":&quot -->
+    <!--    <![CDATA[  sql代码区]]>    -->
+    <!--  使用<![CDATA[ ]]>标记的sql语句中的<where> <if>等标签不会被解析。-->
+    <select id="testDateRangeQuery" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from model
+        where 1=1
+        <if test="sDate != null and sDate != ''">
+            <![CDATA[and create_time>=#{sDate}]]>
+        </if>
+        <if test="eDate != null and eDate != ''">
+            <![CDATA[and create_time<=#{eDate}]]>
+        </if>
+    </select>
+
+    <select id="testSpecialCharacters" resultMap="BaseResultMap">
+        <![CDATA[
+         select * from model where update_time < #{endTime}
+        ]]>
+    </select>
+
+    <insert id="replaceInsert" parameterType="com.personal.knowledge.system.model.Model">
+       replace into model (model_name, model_code, create_user)
+       values (#{modelName,jdbcType=VARCHAR}, #{modelCode,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR})
+    </insert>
+
+</mapper>
