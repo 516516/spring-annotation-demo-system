@@ -23,4 +23,9 @@ public class ModeServiceImpl implements ModelService {
         Model model=modelMapper.selectByPrimaryKey(modelId);
         return model;
     }
+
+    @Override
+    public void f() {
+        System.out.println("f()");
+    }
 }

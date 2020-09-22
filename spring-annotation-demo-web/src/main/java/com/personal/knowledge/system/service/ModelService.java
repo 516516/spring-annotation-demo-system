@@ -4,4 +4,6 @@ import com.personal.knowledge.system.model.Model;
 
 public interface ModelService {
     public Model testDemo(Long modelId);
+
+    public void f();
 }
