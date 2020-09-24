@@ -6,6 +6,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.stereotype.Component;
 
 /**
  * @program: spring-annotation-demo-pom
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.support.RootBeanDefinition;
  * @create: 2020-09-23 20:39
  **/
 //BeanDefinitionRegistryPostProcessor：Bean定义的后置处理器，它继承了BeanFactoryPostProcessor，触发时机，在bean的定义注册之前
+@Component
 public class LifeCycleBean3BeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {

@@ -3,8 +3,8 @@ package com.personal.knowledge.system.zIocDemo.annotationDemo;
 import com.personal.knowledge.system.zIocDemo.annotationDemo.autoware.PrincipleConfig;
 import com.personal.knowledge.system.zIocDemo.annotationDemo.aware.LifeCycleBean3Aware;
 import com.personal.knowledge.system.zIocDemo.annotationDemo.lifeCycle.LifeCycleBean3;
-import com.personal.knowledge.system.zIocDemo.annotationDemo.lifeCycle.LifeCycleConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @program: spring-annotation-demo-pom
@@ -20,9 +20,11 @@ public class Test {
 //        System.out.println(ap2.getBean("addBeanToIocContainerFunc"));
 //        System.out.println(ap2.getBean("&addBeanToIocContainerFunc"));
         AnnotationConfigApplicationContext ap2 = new AnnotationConfigApplicationContext(PrincipleConfig.class);
-        ap2.getBean(LifeCycleBean3.class);
+//        ap2.getBean(LifeCycleBean3.class);
 
         LifeCycleBean3Aware aware=new LifeCycleBean3Aware();
         aware.t1();
+
+        System.out.println(Bean.class.getName());
     }
 }
