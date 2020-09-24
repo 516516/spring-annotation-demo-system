@@ -2,7 +2,6 @@ package com.personal.knowledge.system.zIocDemo.annotationDemo;
 
 import com.personal.knowledge.system.zIocDemo.annotationDemo.autoware.PrincipleConfig;
 import com.personal.knowledge.system.zIocDemo.annotationDemo.aware.LifeCycleBean3Aware;
-import com.personal.knowledge.system.zIocDemo.annotationDemo.lifeCycle.LifeCycleBean3;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 

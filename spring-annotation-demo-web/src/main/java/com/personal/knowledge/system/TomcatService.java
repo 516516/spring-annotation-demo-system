@@ -23,7 +23,8 @@ import javax.servlet.ServletContextListener;
 public class TomcatService {
     public static void main(String[] args) {
 
-        // IOC : https://www.cnblogs.com/toby-xu/p/11332666.html
+        // Spring : https://www.cnblogs.com/toby-xu/category/1520341.html
+
         /*
             1.解析web.xml
             2.往ServletContext实例中注入<context-param> 参数
