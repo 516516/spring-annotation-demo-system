@@ -23,6 +23,7 @@ import javax.servlet.ServletContextListener;
 public class TomcatService {
     public static void main(String[] args) {
 
+        // IOC : https://www.cnblogs.com/toby-xu/p/11332666.html
         /*
             1.解析web.xml
             2.往ServletContext实例中注入<context-param> 参数
@@ -39,27 +40,30 @@ public class TomcatService {
         //扫描@Configuration  注解的类  注入IOC容器
 
         //Spring启动的入口：
-        SpringServletContainerInitializer springServletContainerInitializer=new SpringServletContainerInitializer();
+        SpringServletContainerInitializer springServletContainerInitializer = new SpringServletContainerInitializer();
         WebApplicationInitializer webApplicationInitializer;
 
-        ContextLoader contextLoader=new ContextLoader();
+        ContextLoader contextLoader = new ContextLoader();
         ServletContextListener servletContextListener;
-        ContextLoaderListener cl=new ContextLoaderListener();
+        ContextLoaderListener cl = new ContextLoaderListener();
 
         //refresh()
-        DefaultListableBeanFactory IOC=new DefaultListableBeanFactory();
+        DefaultListableBeanFactory IOC = new DefaultListableBeanFactory();
         //  https://blog.csdn.net/andy_zhang2007/article/details/78549773
         //ConfigurationClassParser parser=new ConfigurationClassParser();
         //ComponentScanAnnotationParser parser1=new ComponentScanAnnotationParser();
         //ComponentScanAnnotationParser parser=new ComponentScanAnnotationParser();
 
-        AnnotationConfigWebApplicationContext configWebApplicationContext=new AnnotationConfigWebApplicationContext();
-        ClassPathBeanDefinitionScanner scanner=new ClassPathBeanDefinitionScanner(null);
+        AnnotationConfigWebApplicationContext configWebApplicationContext = new AnnotationConfigWebApplicationContext();
+        AnnotationConfigApplicationContext configApplicationContext=new AnnotationConfigApplicationContext();
+        ClassPathXmlApplicationContext classPathXmlApplicationContext=new ClassPathXmlApplicationContext();
 
-        DispatcherServlet ds=new DispatcherServlet();
-        ApplicationContext app=new ClassPathXmlApplicationContext("");
-        ApplicationContext app1=new AnnotationConfigApplicationContext();
-        ApplicationContext app2=new AnnotationConfigWebApplicationContext();
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(null);
+
+        DispatcherServlet ds = new DispatcherServlet();
+        ApplicationContext app = new ClassPathXmlApplicationContext("");
+        ApplicationContext app1 = new AnnotationConfigApplicationContext();
+        ApplicationContext app2 = new AnnotationConfigWebApplicationContext();
 
     }
 }
