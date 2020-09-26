@@ -1,5 +1,8 @@
 package com.personal.knowledge.system;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -53,7 +56,7 @@ public class TomcatService {
         ServletContextListener servletContextListener;
         ContextLoaderListener cl = new ContextLoaderListener();
 
-        //refresh()
+        //IOC:  refresh()
         DefaultListableBeanFactory IOC = new DefaultListableBeanFactory();
         //  https://blog.csdn.net/andy_zhang2007/article/details/78549773
         //ConfigurationClassParser parser=new ConfigurationClassParser();
@@ -65,6 +68,10 @@ public class TomcatService {
         ClassPathXmlApplicationContext classPathXmlApplicationContext=new ClassPathXmlApplicationContext();
 
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(null);
+
+        //DI: getBean()  doCreateBean()  population()
+        AutowiredAnnotationBeanPostProcessor aabp=new AutowiredAnnotationBeanPostProcessor();  //findAutowiringMetadata()  -->  buildAutowiringMetadata()
+        DependencyDescriptor dependencyDescriptor=new DependencyDescriptor(null);  //resolveCandidate()  -->  beanFactory.getBean()
 
         DispatcherServlet ds = new DispatcherServlet();
         ApplicationContext app = new ClassPathXmlApplicationContext("");

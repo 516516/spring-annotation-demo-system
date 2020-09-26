@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 //@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Service
 public class B {
-    @Autowired
-    A a;
+
+    String str;
     
     public void f(){
         System.out.println("B to A");
