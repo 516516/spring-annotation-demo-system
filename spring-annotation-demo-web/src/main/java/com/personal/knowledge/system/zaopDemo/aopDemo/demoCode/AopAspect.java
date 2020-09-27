@@ -1,9 +1,6 @@
 package com.personal.knowledge.system.zaopDemo.aopDemo.demoCode;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -94,14 +91,29 @@ public class AopAspect {
     @Pointcut("@args(com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ArgsFlag)")
     public void pointCutArgAnno(){}
 
-    @Before("pointCutArgAnno()")
+    @Before("pointCutExecution()")
     public void before(){
         System.out.println("before  ++++++++++++++++++++++ ");
     }
 
-    @After("pointCutArgAnno()")
+    @AfterThrowing("pointCutExecution()")
+    public void afterThrowing(){
+        System.out.println("afterThrowing  +++++++++++++++++++++++++ ");
+    }
+
+    @AfterReturning("pointCutExecution()")
+    public void afterReturning(){
+        System.out.println("afterReturning  +++++++++++++++++++++++++ ");
+    }
+
+    @After("pointCutExecution()")
     public void after(){
         System.out.println("after  ++++++++++++++++++++++ ");
+    }
+
+    @Around("pointCutExecution()")
+    public void around(){
+        System.out.println("around  ++++++++++++++++++++++ ");
     }
 
 }

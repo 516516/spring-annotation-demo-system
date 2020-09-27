@@ -1,7 +1,6 @@
 package com.personal.knowledge.system.zaopDemo.aopDemo.demoCode;
 
 import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ArgsClass;
-import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ArgsFlag;
 import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ClassFalg;
 import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.FuncFlag;
 import org.springframework.stereotype.Service;

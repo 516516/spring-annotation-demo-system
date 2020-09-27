@@ -1,7 +1,6 @@
 package com.personal.knowledge.system.zaopDemo.aopDemo.demoCode;
 
 import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ArgsClass;
-import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ClassFalg;
 
 /**
  * @program: spring-annotation-demo-pom
