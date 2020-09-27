@@ -11,6 +11,29 @@ import org.springframework.stereotype.Component;
  * @author: bo.hu
  * @create: 2020-09-22 09:54
  **/
+//
+//execution(modifiers-pattern? ret-type-pattern declaring-type-pattern?name-pattern(param-pattern) throws-pattern?)
+//        这里问号表示当前项可以有也可以没有，其中各项的语义如下
+//        modifiers-pattern：方法的可见性，如public，protected；
+//        ret-type-pattern：方法的返回值类型，如int，void等；
+//        declaring-type-pattern：方法所在类的全路径名，如com.spring.Aspect；
+//        name-pattern：方法名类型，如buisinessService()；
+//        param-pattern：方法的参数类型，如java.lang.String；
+//        throws-pattern：方法抛出的异常类型，如java.lang.Exception；
+
+//        example:
+//@Pointcut("execution(* com.toby.dao.*.*(..))")//匹配com.toby.dao包下的任意接口和类的任意方法
+//@Pointcut("execution(public * com.toby.dao.*.*(..))")//匹配com.toby.dao包下的任意接口和类的public方法
+//@Pointcut("execution(public * com.toby.dao.*.*())")//匹配com.toby.dao包下的任意接口和类的public 无方法参数的方法
+//@Pointcut("execution(* com.toby.dao.*.*(java.lang.String, ..))")//匹配com.toby.dao包下的任意接口和类的第一个参数为String类型的方法
+//@Pointcut("execution(* com.toby.dao.*.*(java.lang.String))")//匹配com.toby.dao包下的任意接口和类的只有一个参数，且参数为String类型的方法
+//@Pointcut("execution(* com.toby.dao.*.*(java.lang.String))")//匹配com.toby.dao包下的任意接口和类的只有一个参数，且参数为String类型的方法
+//@Pointcut("execution(public * *(..))")//匹配任意的public方法
+//@Pointcut("execution(* te*(..))")//匹配任意的以te开头的方法
+//@Pointcut("execution(* com.toby.dao.IndexDao.*(..))")//匹配com.toby.dao.IndexDao接口中任意的方法
+//@Pointcut("execution(* com.toby.dao..*.*(..))")//匹配com.toby.dao包及其子包中任意的方法
+//关于这个表达式的详细写法,可以参考官网：https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#aop-pointcuts-examples
+
 @Component
 @Aspect
 @Slf4j
