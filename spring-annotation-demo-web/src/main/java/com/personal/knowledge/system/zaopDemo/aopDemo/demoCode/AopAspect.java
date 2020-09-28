@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 public class AopAspect {
 
     //execution:可以精确到方法的返回值，参数个数、修饰符、参数类型等
-    @Pointcut("execution(* com.personal.knowledge.system.zaopDemo.aopDemo.demoCode.*.*(..))")
+    @Pointcut("execution(* com.personal.knowledge.system.zaopDemo.aopDemo.demoCode.AopServiceImpl.*(..))")
     public void pointCutExecution(){}
 
     //within:与execution相比，粒度更大，仅能实现到包和接口、类级别

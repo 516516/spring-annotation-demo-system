@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
  * @create: 2020-09-27 10:51
  **/
 @Service
-@ClassFalg
 public class AopServiceImpl implements AopService {
 
     @Override

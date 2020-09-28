@@ -1,6 +1,5 @@
 package com.personal.knowledge.system.zaopDemo.aopDemo;
 
-import com.personal.knowledge.system.zaopDemo.aopDemo.annotation.ArgsClass;
 import com.personal.knowledge.system.zaopDemo.aopDemo.demoCode.AopService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -14,8 +13,9 @@ public class Test {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AopConfig.class);
         AopService demo = (AopService) context.getBean("aopServiceImpl");
+        //JdkDynamicAopProxy
         demo.say("hagha;ghas;gfha;sdha;ghas");
-        demo.say();
-        demo.agrsAnno(new ArgsClass());
+//        demo.say();
+//        demo.agrsAnno(new ArgsClass());
     }
 }
