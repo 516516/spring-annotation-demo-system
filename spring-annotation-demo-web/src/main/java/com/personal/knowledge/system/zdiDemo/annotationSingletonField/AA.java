@@ -1,8 +1,6 @@
 package com.personal.knowledge.system.zdiDemo.annotationSingletonField;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,10 +17,10 @@ import java.util.HashSet;
 
 //@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Service
-public class A {
+public class AA {
 
     @Autowired
-    B b;
+    BB b;
 
     ArrayList<String> testList;
 

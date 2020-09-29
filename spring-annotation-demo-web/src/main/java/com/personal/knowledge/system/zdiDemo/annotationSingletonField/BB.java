@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  **/
 //@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Service
-public class B {
+public class BB {
 
     String str;
     

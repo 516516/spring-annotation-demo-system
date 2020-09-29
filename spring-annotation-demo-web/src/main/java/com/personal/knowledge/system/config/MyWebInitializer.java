@@ -16,7 +16,7 @@ public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletI
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] {WebConfig.class};
+        return new Class<?>[] {ServletConfig.class};
     }
 
     @Override

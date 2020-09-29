@@ -1,6 +1,6 @@
 package com.personal.knowledge.system;
 
-import org.springframework.beans.factory.BeanFactory;
+import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -14,6 +14,8 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.handler.AbstractDetectingUrlHandlerMapping;
+import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 
 import javax.servlet.ServletContextListener;
 
@@ -59,9 +61,9 @@ public class TomcatService {
         //IOC:  refresh()
         DefaultListableBeanFactory IOC = new DefaultListableBeanFactory();
         //  https://blog.csdn.net/andy_zhang2007/article/details/78549773
-        //ConfigurationClassParser parser=new ConfigurationClassParser();
-        //ComponentScanAnnotationParser parser1=new ComponentScanAnnotationParser();
-        //ComponentScanAnnotationParser parser=new ComponentScanAnnotationParser();
+        //  ConfigurationClassParser parser=new ConfigurationClassParser();
+        //  ComponentScanAnnotationParser parser1=new ComponentScanAnnotationParser();
+        //  ComponentScanAnnotationParser parser=new ComponentScanAnnotationParser();
 
         AnnotationConfigWebApplicationContext configWebApplicationContext = new AnnotationConfigWebApplicationContext();
         AnnotationConfigApplicationContext configApplicationContext=new AnnotationConfigApplicationContext();
@@ -73,10 +75,21 @@ public class TomcatService {
         AutowiredAnnotationBeanPostProcessor aabp=new AutowiredAnnotationBeanPostProcessor();  //findAutowiringMetadata()  -->  buildAutowiringMetadata()
         DependencyDescriptor dependencyDescriptor=new DependencyDescriptor(null);  //resolveCandidate()  -->  beanFactory.getBean()
 
+        // AOP
+        AnnotationAwareAspectJAutoProxyCreator  creator=new AnnotationAwareAspectJAutoProxyCreator();
+
+        // SpringMVC
+        // tomcat -- DispatcherServlet构造器
+        // 入口：finishRefresh()--publishEvent()--onApplicationEvent()--onRefresh()
         DispatcherServlet ds = new DispatcherServlet();
+        // HandlerMapping --urls--Controller
+        AbstractDetectingUrlHandlerMapping handlerMapping=new BeanNameUrlHandlerMapping();
+
         ApplicationContext app = new ClassPathXmlApplicationContext("");
         ApplicationContext app1 = new AnnotationConfigApplicationContext();
         ApplicationContext app2 = new AnnotationConfigWebApplicationContext();
+
+        //Spring事务
 
     }
 }

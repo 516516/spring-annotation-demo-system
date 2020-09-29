@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @author: bo.hu
  * @create: 2020-09-25 15:46
  **/
-@Service
+//@Service
 public class A {
     public A(B b){
 

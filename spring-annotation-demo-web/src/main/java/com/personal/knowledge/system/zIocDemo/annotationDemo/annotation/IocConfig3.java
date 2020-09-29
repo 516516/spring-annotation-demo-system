@@ -27,7 +27,7 @@ import org.springframework.stereotype.Controller;
 ,@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,value = {Test.class})})
 
 @Configuration
-public class IocConfig {
+public class IocConfig3 {
 
     @Bean
     @Scope("prototype")

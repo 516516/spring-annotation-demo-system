@@ -12,7 +12,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  * @create: 2020-09-21 14:28
  **/
 @Configuration
-@ComponentScan(basePackages = {"com.personal.knowledge.system"},
+@ComponentScan(basePackages = {"com.personal.knowledge.system.aspect",
+        "com.personal.knowledge.system.config",
+        "com.personal.knowledge.system.controller",
+        "com.personal.knowledge.system.interceptor",
+        "com.personal.knowledge.system.service"},
 excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class))
 public class RootConfig {
 }

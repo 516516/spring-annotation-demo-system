@@ -1,7 +1,7 @@
 package com.personal.knowledge.system.zdiDemo;
 
-import com.personal.knowledge.system.zdiDemo.annotationSingletonField.A;
-import com.personal.knowledge.system.zdiDemo.annotationSingletonField.B;
+import com.personal.knowledge.system.zdiDemo.annotationSingletonField.AA;
+import com.personal.knowledge.system.zdiDemo.annotationSingletonField.BB;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -13,9 +13,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Test {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext app=new AnnotationConfigApplicationContext(A.class, B.class);
-        A a=app.getBean(A.class);
-        B b=app.getBean(B.class);
+        AnnotationConfigApplicationContext app=new AnnotationConfigApplicationContext(AA.class, BB.class);
+        AA a=app.getBean(AA.class);
+        BB b=app.getBean(BB.class);
     }
 
 }
