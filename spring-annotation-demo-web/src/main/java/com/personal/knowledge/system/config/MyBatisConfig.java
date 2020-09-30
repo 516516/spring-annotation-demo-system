@@ -11,6 +11,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -23,6 +26,7 @@ import java.io.IOException;
  **/
 @Configuration
 @PropertySource("classpath:application.properties")
+@EnableTransactionManagement  // 开启事务
 public class MyBatisConfig {
 
     @Bean
@@ -57,4 +61,8 @@ public class MyBatisConfig {
         return scanner;
     }
 
+    @Bean
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
 }

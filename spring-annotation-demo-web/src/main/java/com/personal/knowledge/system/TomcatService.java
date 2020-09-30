@@ -8,6 +8,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.web.SpringServletContainerInitializer;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoader;
@@ -89,7 +92,10 @@ public class TomcatService {
         ApplicationContext app1 = new AnnotationConfigApplicationContext();
         ApplicationContext app2 = new AnnotationConfigWebApplicationContext();
 
-        //Spring事务
+        // Spring事务 transactional
+        PlatformTransactionManager platformTransactionManager;
+        TransactionDefinition transactionDefinition;
+        TransactionStatus transactionStatus;
 
     }
 }

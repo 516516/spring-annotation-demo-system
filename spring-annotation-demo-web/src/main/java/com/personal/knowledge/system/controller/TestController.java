@@ -1,5 +1,7 @@
 package com.personal.knowledge.system.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.personal.knowledge.system.model.Model;
 import com.personal.knowledge.system.service.ModelService;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +46,26 @@ public class TestController {
             map.put("code", 0);
             map.put("msg", "error");
             map.put("data",new Object());
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/testTranscational", method = RequestMethod.POST)
+    @ResponseBody
+    public  Map<String, Object> testTransactional(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> map = new HashMap();
+        Model addModel=null;
+        try {
+            addModel= JSONObject.parseObject(request.getParameter("modelStr"),Model.class);
+            modelService.addModel(addModel);
+            map.put("code", 1);
+            map.put("msg", "success");
+            map.put("data", JSON.toJSONString(new Object()));
+        } catch (Exception e) {
+            log.error("添加异常: ",e);
+            map.put("code", 0);
+            map.put("msg", "error");
+            map.put("data",JSON.toJSONString(new Object()));
         }
         return map;
     }
