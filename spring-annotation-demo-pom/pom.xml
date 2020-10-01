@@ -219,6 +219,8 @@
   <modules>
     <module>../spring-annotation-demo-dao</module>
     <module>../spring-annotation-demo-web</module>
+      <module>../spring-annotation-demo-project</module>
+    <module>../spring-annotation-demo-project-web</module>
   </modules>
 
 </project>

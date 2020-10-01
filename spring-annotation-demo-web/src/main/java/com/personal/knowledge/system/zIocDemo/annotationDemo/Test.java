@@ -1,5 +1,6 @@
 package com.personal.knowledge.system.zIocDemo.annotationDemo;
 
+import com.personal.knowledge.system.zIocDemo.annotationDemo.annotation.IocBean;
 import com.personal.knowledge.system.zIocDemo.annotationDemo.autoware.PrincipleConfig;
 import com.personal.knowledge.system.zIocDemo.annotationDemo.aware.LifeCycleBean3Aware;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -18,12 +19,9 @@ public class Test {
 //        AnnotationConfigApplicationContext ap2 = new AnnotationConfigApplicationContext(AddBeanToIocContainerFunc.class);
 //        System.out.println(ap2.getBean("addBeanToIocContainerFunc"));
 //        System.out.println(ap2.getBean("&addBeanToIocContainerFunc"));
-        AnnotationConfigApplicationContext ap2 = new AnnotationConfigApplicationContext(PrincipleConfig.class);
-//        ap2.getBean(LifeCycleBean3.class);
+        AnnotationConfigApplicationContext ap2 = new AnnotationConfigApplicationContext(IocBean.class);
+        IocBean bean=ap2.getBean(IocBean.class);
+        System.out.println(bean.getName());
 
-        LifeCycleBean3Aware aware=new LifeCycleBean3Aware();
-        aware.t1();
-
-        System.out.println(Bean.class.getName());
     }
 }
